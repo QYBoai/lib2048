@@ -20,6 +20,8 @@ struct L2_point{
 	L2_xy y;	/*纵坐标*/
 };
 	/*struct L2_point	格坐标*/
+typedef struct L2_poing L2_point;
+	/*L2_point	同struct L2_point*/
 ```
 ```c
 struct L2_gb{
@@ -27,6 +29,8 @@ struct L2_gb{
 	L2_pv val;	/*格子中的数字(指数)*/
 };
 	/*struct L2_gb	一个格子完整的信息*/
+typedef struct L2_gb L2_gb;
+	/*L2_gb	同struct L2_gb*/
 ```
 ```c
 typedef L2_sv L2_tab[4][4];
@@ -50,4 +54,6 @@ struct L2_game{
 	void *randi;	/*供自定义随机函数使用的指针，与库无关*/
 }
 	/*struc L2_game	游戏实例*/
+typedef struct L2_game L2_game;
+	/*L2_game 同struct L2_game*/
 ```
