@@ -52,7 +52,7 @@ struct L2_game{
 	L2_sint (*rand)(struct L2_game *game,L2_sint s,L2_sint e);	/*自定义随机函数，返回[s,e]之间的整数(s<=e)，game传入该游戏实例的指针*/
 	void (*rands)(struct L2_game *game);	/*自定义随机初始化函数，game传入该游戏实例的指针*/
 	void *randi;	/*供自定义随机函数使用的指针，与库无关*/
-}
+};
 	/*struc L2_game	游戏实例*/
 typedef struct L2_game L2_game;
 	/*L2_game 同struct L2_game*/
