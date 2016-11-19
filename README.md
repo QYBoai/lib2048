@@ -16,15 +16,15 @@ typedef uint_least8_t L2_xy;
 ```
 ```c
 struct L2_point{
-	L2_xy x=0;	/*横坐标*/
-	L2_xy y=0;	/*纵坐标*/
+	L2_xy x;	/*横坐标*/
+	L2_xy y;	/*纵坐标*/
 };
 	/*struct L2_point	格坐标*/
 ```
 ```c
 struct L2_gb{
-	L2_point point;	/*格坐标*/
-	L2_pv val=0;	/*格子中的数字(指数)*/
+	struct L2_point point;	/*格坐标*/
+	L2_pv val;	/*格子中的数字(指数)*/
 };
 	/*struct L2_gb	一个格子完整的信息*/
 ```
