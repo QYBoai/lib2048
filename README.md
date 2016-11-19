@@ -54,7 +54,7 @@ L2_pvf	格子实际数值
 typedef uint_least32_t L2_pvf;
 	/*L2_pvf	格子实际数值*/
 ```
-struc L2_game	游戏实例  
+struct L2_game	游戏实例  
 L2_game 同struct L2_game
 ```c
 struct L2_game{
@@ -65,7 +65,7 @@ struct L2_game{
 	void (*rands)(struct L2_game *game);	/*自定义随机初始化函数，game传入该游戏实例的指针*/
 	void *randi;	/*供自定义随机函数使用的指针，与库无关*/
 };
-	/*struc L2_game	游戏实例*/
+	/*struct L2_game	游戏实例*/
 typedef struct L2_game L2_game;
 	/*L2_game 同struct L2_game*/
 ```
