@@ -34,4 +34,18 @@ struct L2_game{
 };
 	/*struct L2_game	游戏实例*/
 typedef struct L2_game L2_game;
-	/*L2_game 同struct L2_game*/
+	/*L2_game	同struct L2_game*/
+L2_gd 12_new(L2_game *game);
+	/*L2_gd l2_new(L2_game *game)	随机生成新数字。
+			返回新生成的格子*/
+L2_gb l2_new_pv(L2_game *game,const L2_gb gb);
+	/*L2_gd l2_new(L2_game *game,const L2_gb gb)	生成新数字，gd参数为自定生成数字的位置以及数值，gb中坐标值取5则坐标随机，数值取0则数值随机。
+			返回新生成的格子*/
+void 12_set_pv(L2_game *game,const L2_gb gb);
+	/*void 12_set_gb(L2_game *game,const L2_gb gb)	设置棋盘上的数值*/
+L2_pv l2_get_pv(const L2_game *game,const L2_point);
+	/*L2_pv l2_get_pv(const L2_game *game,const L2_point)	获取指定坐标上的数值
+			返回该坐标上的数值*/
+L2_table *l2_get_table(const L2_game *game,L2_table *table);
+	/*L2_table *l2_get_table(const L2_game *game,L2_table *table)	获取整个棋盘，table指针用于储存棋盘；
+			返回table指针*/
