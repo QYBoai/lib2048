@@ -49,3 +49,6 @@ L2_pv l2_get_pv(const L2_game *game,const L2_point);
 L2_table *l2_get_table(const L2_game *game,L2_table *table);
 	/*L2_table *l2_get_table(const L2_game *game,L2_table *table)	获取整个棋盘，table指针用于储存棋盘；
 			返回table指针*/
+L2_table *l2_clone(const L2_game *game,L2_table *target);
+	/*L2_table *l2_clone(const L2_game *game,L2_game *target)	克隆一个有相同数据(随机函数会复位为默认)的游戏实例；
+			返回target指针*/
