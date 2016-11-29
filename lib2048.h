@@ -35,7 +35,21 @@ struct L2_game{
 	/*struct L2_game	游戏实例*/
 typedef struct L2_game L2_game;
 	/*L2_game	同struct L2_game*/
-L2_gd 12_new(L2_game *game);
+L2_game *l2_init(L2_game *game);
+	/*L2_game *l2_start(L2_game *game)	初始化一个游戏实例(但不生成初始数格)；
+			返回传入的指针*/
+l2_game *l2_start(L2_game *game);
+	/*L2_game *l2_start(L2_game *game)	开始新游戏(生成初始数格)；
+			返回传入的指针*/
+L2_sint l2_mx(L2_game *game);	/*向x正方向划动*/
+L2_sint l2_fx(L2_game *game);	/*向x负方向划动*/
+L2_sint l2_my(L2_game *gmae);	/*向y正方向划动*/
+L2_sint l2_fy(L2_game *game);	/*向y负方向划动*/
+	/*以上四个函数，若划动成功，返回已占用格子数，划动不成功返回0*/
+L2_sint l2_num(const L2_game *game);
+	/*L2_sint 12_end(const L2_game *game)	 返回占用格子数；
+			游戏未开始返回1，游戏已结束返回0*/
+L2_gd 12_new(L2_game *game);	
 	/*L2_gd l2_new(L2_game *game)	随机生成新数字。
 			返回新生成的格子*/
 L2_gb l2_new_pv(L2_game *game,const L2_gb gb);
@@ -52,3 +66,6 @@ L2_table *l2_get_table(const L2_game *game,L2_table *table);
 L2_table *l2_clone(const L2_game *game,L2_table *target);
 	/*L2_table *l2_clone(const L2_game *game,L2_game *target)	克隆一个有相同数据(随机函数会复位为默认)的游戏实例；
 			返回target指针*/
+L2_pv l2_set_pv(L2_game *game,const L2_gd gd);
+	/*L2_pv l2_set_pv(L2_game *game,const L2_gd gd)	设置特定坐标上格子的数值；
+			返回原数值*/
