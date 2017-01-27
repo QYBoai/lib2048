@@ -66,7 +66,7 @@ L2_EX L2_tab *l2_clone(const L2_game *game,L2_game *target,L2_sint (*rand)(struc
 	target->randi=randi;
 	return target;
 }
-        /*L2_tab *l2_clone(const L2_game *game,L2_game *target) 克隆一个有相同数据(随机函数除外)的游戏实例；
+        /*L2_tab *l2_clone(const L2_game *game,L2_game *target,L2_sint (*rand)(struct L2_game *game,L2_sint s,L2_sint e),void (*rands)(struct L2_game *game),void *randi) 克隆一个有相同数据(随机函数除外)的游戏实例；
                         返回target指针*/
 L2_EX L2_pv l2_set_pv(L2_game *game,const L2_gb gb){
 	L2_pv pv=game->table[gb.point.x][gb.point.y];
