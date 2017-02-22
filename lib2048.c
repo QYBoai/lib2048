@@ -7,7 +7,7 @@ static L2_sv _l2_plus_sv(L2_sv sv,L2_pv pv){
 	return sv+_TWO[pv];
 }
 
-L2_EX L2_game *l2_init(L2_game *game,L2_sint (*rand)(struct L2_game *game,L2_sint s,L2_sint e),void (*rands)(struct L2_game *game),void *randi){
+L2_EX L2_game *l2_init(L2_game *game,L2_sint (*rand)(struct L2_game *game,L2_sint s,L2_sint e),void (*rands)(void *randi),void *randi){
 /*	game->soc=0;	*/
 /*	for(int n=0,n<=3,n++) for(int m=0,m<=3,m++)game->table[n][m]=0;	*/
 	game->num=1;
@@ -32,17 +32,17 @@ L2_EX L2_sint l2_my(L2_game *gmae);     /*向y正方向划动*/
 L2_EX L2_sint l2_fy(L2_game *game);     /*向y负方向划动*/
         /*以上四个函数，若划动成功，返回已占用格子数，划动不成功返回0*/
 L2_EX L2_sint l2_num(const L2_game *game){
-	return game->num;
+/*	return game->num;*/
 }
-        /*L2_sint l2_end(const L2_game *game)    返回占用格子数；
-                        游戏未开始返回1，游戏已结束返回0*/
+        /*L2_sint l2_num(const L2_game *game)    返回占用格子数；
+                        游戏已结束返回17*/
 L2_EX L2_gb l2_new(L2_game *game){
 	return L2_new_pv(game,(L2_gb){.point=(L2_point){.x=4,.y=4},.val=0});
 }
         /*L2_gd l2_new(L2_game *game)   随机生成新数字。
                         返回新生成的格子*/
 L2_EX L2_gb l2_new_pv(L2_game *game,const L2_gb gb);
-        /*L2_gd l2_new(L2_game *game,const L2_gb gb)    生成新数字，gd参数为自定生成数字的位置以及数值，gb中坐标值取5则坐标>随机，数值取0则数值随机。
+        /*L2_gd l2_new(L2_game *game,const L2_gb gb)    生成新数字，gd参数为自定生成数字的位置以及数值，gb中坐标值取4则坐标随机，数值取0则数值随机。
                         返回新生成的格子*/
 L2_EX void l2_set_gd(L2_game *game,const L2_gb gb){
 	game->table[gb.point.x][gb.point.y]=gb.val;
@@ -53,20 +53,20 @@ L2_EX L2_pv l2_get_pv(const L2_game *game,const L2_point point){
 }
         /*L2_pv l2_get_pv(const L2_game *game,const L2_point point)     获取指定坐标上的数值
                         返回该坐标上的数值*/
-L2_EX L2_tab *l2_get_table(const L2_game *game,L2_tab *table);{
+L2_EX L2_tab *l2_get_table(const L2_game *game,L2_tab *table){
 	for(int n=0;n<=3;n++) for(int m=0;m<=3;m++) table[n][m]=game->table[n][m];
 	return table;
 }
         /*L2_tab *l2_get_table(const L2_game *game,L2_tab *table)       获取整个棋盘，table指针用于储存棋盘；
                         返回table指针*/
-L2_EX L2_tab *l2_clone(const L2_game *game,L2_game *target,L2_sint (*rand)(struct L2_game *game,L2_sint s,L2_sint e),void (*rands)(struct L2_game *game),void *randi){
+L2_EX L2_tab *l2_clone(const L2_game *game,L2_game *target,L2_sint (*rand)(void *randi,L2_sint s,L2_sint e),void (*rands)(void *randi),void *randi){
 	*target=*game;
 	target->rand=rand;
 	target->rands=rands;
 	target->randi=randi;
 	return target;
 }
-        /*L2_tab *l2_clone(const L2_game *game,L2_game *target,L2_sint (*rand)(struct L2_game *game,L2_sint s,L2_sint e),void (*rands)(struct L2_game *game),void *randi) 克隆一个有相同数据(随机函数除外)的游戏实例；
+        /*L2_tab *l2_clone(const L2_game *game,L2_game *target,L2_sint (*rand)(void *randi,L2_sint s,L2_sint e),void (*rands)(void *randi),void *randi) 克隆一个有相同数据(随机函数另外传入)的游戏实例；
                         返回target指针*/
 L2_EX L2_pv l2_set_pv(L2_game *game,const L2_gb gb){
 	L2_pv pv=game->table[gb.point.x][gb.point.y];
