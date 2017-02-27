@@ -10,7 +10,7 @@ static L2_sv _l2_plus_sv(L2_sv sv,L2_pv pv){
 L2_EX L2_game *l2_init(L2_game *game,L2_sint (*rand)(struct L2_game *game,L2_sint s,L2_sint e),void (*rands)(void *randi),void *randi){
 /*	game->soc=0;	*/
 /*	for(int n=0,n<=3,n++) for(int m=0,m<=3,m++)game->table[n][m]=0;	*/
-	game->num=1;
+	game->num=17;
 	game->rand=rand;
 	game->rands=rands;
 	game->randi=randi;
