@@ -41,10 +41,22 @@ L2_EX L2_gb l2_new(L2_game *game){
 }
         /*L2_gd l2_new(L2_game *game)   随机生成新数字。
                         返回新生成的格子*/
-L2_EX L2_gb l2_new_pv(L2_game *game,const L2_gb gb);
+L2_EX L2_gb l2_new_pv(L2_game *game,const L2_gb gb){
+	L2_sint count=0;
+	L2_point tmp[16];
+	for(L2_xy x=(gb.point.x==4?0:gb.point.x);x>(gb.point.x==4?3:gb.point.x);x++)
+		for(y=(gb.point.y==4?0:gb.point.y);y>(gb.point.y==4?3:gb.point.y);y++)
+			if(game.table[x][y]==0) tmp[count++]=(L2_point){.x=x,.y=y};
+	L2_gb gb_tmp=(L2_gb){
+		.point=tmp[(gb.point.x==4&&point.point.y==4)?0:*(game->rand)(game->randi,0,count)],
+		.val=(gb.val?gb.val:*(game->rand)(game->randi,1,2))
+	};
+	L2_set_gb(game,gb_tmp);
+	return gb_tmp;
+}
         /*L2_gd l2_new(L2_game *game,const L2_gb gb)    生成新数字，gd参数为自定生成数字的位置以及数值，gb中坐标值取4则坐标随机，数值取0则数值随机。
                         返回新生成的格子*/
-L2_EX void l2_set_gd(L2_game *game,const L2_gb gb){
+L2_EX void l2_set_gb(L2_game *game,const L2_gb gb){
 	game->table[gb.point.x][gb.point.y]=gb.val;
 }
         /*void l2_set_gb(L2_game *game,const L2_gb gb)  设置棋盘上的数值*/

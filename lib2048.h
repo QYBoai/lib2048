@@ -60,7 +60,7 @@ L2_EX L2_gb l2_new(L2_game *game);
 L2_EX L2_gb l2_new_pv(L2_game *game,const L2_gb gb);
 	/*L2_gd l2_new(L2_game *game,const L2_gb gb)	生成新数字，gd参数为自定生成数字的位置以及数值，gb中坐标值取4则坐标随机，数值取0则数值随机。
 			返回新生成的格子*/
-L2_EX void l2_set_gd(L2_game *game,const L2_gb gb);
+L2_EX void l2_set_gb(L2_game *game,const L2_gb gb);
 	/*void l2_set_gb(L2_game *game,const L2_gb gb)	设置棋盘上的数值*/
 L2_EX L2_pv l2_get_pv(const L2_game *game,const L2_point point);
 	/*L2_pv l2_get_pv(const L2_game *game,const L2_point point)	获取指定坐标上的数值
