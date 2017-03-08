@@ -26,13 +26,62 @@ L2_EX L2_game *l2_start(L2_game *game){
 }
         /*L2_game *l2_start(L2_game *game)      开始新游戏(生成初始数格)；
                         返回传入的指针*/
-L2_EX L2_sint l2_mx(L2_game *game);     /*向x正方向划动*/
-L2_EX L2_sint l2_fx(L2_game *game);     /*向x负方向划动*/
-L2_EX L2_sint l2_my(L2_game *gmae);     /*向y正方向划动*/
-L2_EX L2_sint l2_fy(L2_game *game);     /*向y负方向划动*/
+#define _l2_move(ok) { \
+	L2_xy hb=0; \
+	L2_sint tmp=0; \
+	for(L2_xy h=0;hl<=3;hl++){ \
+		if(tmp){ \
+			if(s(nl)==s(nb)){ \
+				ok=1; \
+				tmp=0; \
+				soc+=_ls_plus_sv(o,++s(nb++)); \
+				continue; \
+			} else ++nb; \
+		} \
+		if(nl!=nb){ \
+			s(nl)=s(nb); \
+			ok=1; \
+		} \
+		tmp=1; \
+	} \
+	for(nb+=tmp;nb<=3;nb++) s(nb)=0; \
+}
+#define _l2_move_f() {\
+	L2_sint ok=0; \
+	for(L2_sint h=0;h<=3;h++) \
+		_l2_move(ok); \
+	return ok?l2_num(game):0; \
+}
+#define s(n) (game->table[3-(n)][(h)])
+L2_EX L2_sint l2_mx(L2_game *game)_l2_move_f();     /*向x正方向划动*/
+#undef s(n)
+#define s(n) (game->table[(n)][(h)])
+L2_EX L2_sint l2_fx(L2_game *game)_l2_move_f();     /*向x负方向划动*/
+#undef s(n)
+#define s(n) (game->table[(h)][3-(n)])
+L2_EX L2_sint l2_my(L2_game *gmae)_l2_move_f();     /*向y正方向划动*/
+#undef s(n)
+#define s(n) (game->table[(h)][(n)])
+L2_EX L2_sint l2_fy(L2_game *game)_l2_move_f();     /*向y负方向划动*/
+#undef s(n)
         /*以上四个函数，若划动成功，返回已占用格子数，划动不成功返回0*/
 L2_EX L2_sint l2_num(const L2_game *game){
 /*	return game->num;*/
+	#define t (game->table)
+	if(game->num==16){
+		for(L2_xy h=0;h<=3;h++){
+			if(
+				t[h][0]==t[h][1]||
+				t[h][1]==t[h][2]||
+				t[h][2]==t[h][3]||
+				t[0][h]==t[1][h]||
+				t[1][h]==t[2][h]||
+				t[2][h]==t[3][h]
+			)return 16;
+		}
+		game->num=17;
+		return 17;
+	}
 }
         /*L2_sint l2_num(const L2_game *game)    返回占用格子数；
                         游戏已结束返回17*/
@@ -44,11 +93,11 @@ L2_EX L2_gb l2_new(L2_game *game){
 L2_EX L2_gb l2_new_pv(L2_game *game,const L2_gb gb){
 	L2_sint count=0;
 	L2_point tmp[16];
-	for(L2_xy x=(gb.point.x==4?0:gb.point.x);x>(gb.point.x==4?3:gb.point.x);x++)
-		for(y=(gb.point.y==4?0:gb.point.y);y>(gb.point.y==4?3:gb.point.y);y++)
+	for(L2_xy x=(gb.point.x==4?0:gb.point.x);x<=(gb.point.x==4?3:gb.point.x);x++)
+		for(y=(gb.point.y==4?0:gb.point.y);y<=(gb.point.y==4?3:gb.point.y);y++)
 			if(game.table[x][y]==0) tmp[count++]=(L2_point){.x=x,.y=y};
 	L2_gb gb_tmp=(L2_gb){
-		.point=tmp[(gb.point.x==4&&point.point.y==4)?0:*(game->rand)(game->randi,0,count)],
+		.point=tmp[(gb.point.x==4&&point.point.y==4)?0:*(game->rand)(game->randi,0,count-1)],
 		.val=(gb.val?gb.val:*(game->rand)(game->randi,1,2))
 	};
 	L2_set_gb(game,gb_tmp);
