@@ -67,7 +67,7 @@ L2_EX L2_sint l2_fy(L2_game *game)_l2_move_f();     /*向y负方向划动*/
         /*以上四个函数，若划动成功，返回已占用格子数，划动不成功返回0*/
 L2_EX L2_sint l2_num(const L2_game *game){
 /*	return game->num;*/
-	#define t (game->table)
+#define t (game->table)
 	if(game->num==16){
 		for(L2_xy h=0;h<=3;h++){
 			if(
@@ -82,6 +82,7 @@ L2_EX L2_sint l2_num(const L2_game *game){
 		game->num=17;
 		return 17;
 	}
+#undef t
 }
         /*L2_sint l2_num(const L2_game *game)    返回占用格子数；
                         游戏已结束返回17*/
