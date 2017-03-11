@@ -48,7 +48,7 @@ struct L2_game{
 	/*struct L2_game	游戏实例*/
 typedef struct L2_game L2_game;
 	/*L2_game	同struct L2_game*/
-L2_EX L2_game *l2_init(L2_game *game,L2_sint (*rand)(struct L2_game *game,L2_sint s,L2_sint e),void (*rands)(struct L2_game *game),void *randi);
+L2_EX L2_game *l2_init(L2_game *game,L2_sint (*rand)(void *randi,L2_sint s,L2_sint e),void (*rands)(void *randi),void *randi);
 	/*L2_game *l2_start(L2_game *game,L2_sint (*rand)(struct L2_game *game,L2_sint s,L2_sint e),void (*rands)(struct L2_game *game),void *randi)	初始化一个游戏实例(但不生成初始数格)；
 			返回传入的指针*/
 L2_EX L2_game *l2_start(L2_game *game);
@@ -59,7 +59,7 @@ L2_EX L2_sint l2_fx(L2_game *game);	/*向x负方向划动*/
 L2_EX L2_sint l2_my(L2_game *gmae);	/*向y正方向划动*/
 L2_EX L2_sint l2_fy(L2_game *game);	/*向y负方向划动*/
 	/*以上四个函数，若划动成功，返回已占用格子数，划动不成功返回0，游戏已结束则返回17*/
-L2_EX L2_sint l2_num(const L2_game *game);
+L2_EX L2_sint l2_num(L2_game *game);
 	/*L2_sint l2_num(const L2_game *game)	 返回占用格子数；
 			游戏已结束返回17*/
 L2_EX L2_gb l2_new(L2_game *game);	
@@ -76,16 +76,20 @@ L2_EX L2_pv l2_get_pv(const L2_game *game,const L2_point point);
 L2_EX L2_tab *l2_get_table(const L2_game *game,L2_tab *table);
 	/*L2_tab *l2_get_table(const L2_game *game,L2_tab *table)	获取整个棋盘，table指针用于储存棋盘；
 			返回table指针*/
-L2_EX L2_tab *l2_clone(const L2_game *game,L2_game *target,L2_sint (*rand)(struct L2_game *game,L2_sint s,L2_sint e),void (*rands)(struct L2_game *game),void *randi);
+L2_EX L2_game *l2_clone(const L2_game *game,L2_game *target,L2_sint (*rand)(void *randi,L2_sint s,L2_sint e),void (*rands)(void* randi),void *randi);
 	/*L2_tab *l2_clone(const L2_game *game,L2_game *target,L2_sint (*rand)(struct L2_game *game,L2_sint s,L2_sint e),void (*rands)(struct L2_game *game),void *randi)	克隆一个有相同数据(随机函数另外传入)的游戏实例；
 			返回target指针*/
 L2_EX L2_pv l2_set_pv(L2_game *game,const L2_gb gb);
 	/*L2_pv l2_set_pv(L2_game *game,const L2_gb gb)	设置特定坐标上格子的数值；
+	 *
 			返回原数值*/
 static L2_pvf _L2_TWO[19]={0x1,0x2,0x4,0x8,0x10,0x20,0x40,0x80,0x100,0x200,0x400,0x800,0x1000,0x2000,0x4000,0x8000,0x10000,0x20000,0x40000};	/*_TWO[n]=2^n*/
-inline L2_sv l2_plus_sv(const L2_sv sv,const L2_pv pv)
+static inline L2_sv l2_plus_sv(const L2_sv sv,const L2_pv pv){
 	return sv+_L2_TWO[pv];
-inline L2_pvf l2_pv2pvf(L2_pv pv)
+}
+static inline L2_pvf l2_pv2pvf(L2_pv pv){
 	return _L2_TWO[pv];
-inline L2_tab *l2_get_tablelink(const L2_game *game)
+}
+static inline L2_tab *l2_get_tablelink(const L2_game *game){
 	return &(game->table);
+}
