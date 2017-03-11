@@ -1,8 +1,16 @@
 #include <stdint.h>
-#ifdef L2_VER
-#define L2_EX 
+#define L2_VER 1
+#define L2_HEAD
+#ifdef L2_C
+#	define L2_EX
 #else
-#define L2_EX extern
+#	ifdef L2_INLINE
+#		define L2_EX inline
+#		include<lib2048.c>
+#	else
+#		define L2_EX extern
+#	endif
+#endif
 typedef uint_least8_t L2_pv;
 	/*L2_pv	格子中的数字(指数，如：格子中的数字为16，该值为4)*/
 typedef uint_least32_t L2_sv;
@@ -58,7 +66,7 @@ L2_EX L2_gb l2_new(L2_game *game);
 	/*L2_gd l2_new(L2_game *game)	随机生成新数字。
 			返回新生成的格子*/
 L2_EX L2_gb l2_new_pv(L2_game *game,const L2_gb gb);
-	/*L2_gd l2_new(L2_game *game,const L2_gb gb)	生成新数字，gd参数为自定生成数字的位置以及数值，gb中坐标值取4则坐标随机，数值取0则数值随机。
+	/*L2_gd l2_new_pv(L2_game *game,const L2_gb gb)	生成新数字，gd参数为自定生成数字的位置以及数值，gb中坐标值取4则坐标随机，数值取0则数值随机。
 			返回新生成的格子*/
 L2_EX void l2_set_gb(L2_game *game,const L2_gb gb);
 	/*void l2_set_gb(L2_game *game,const L2_gb gb)	设置棋盘上的数值*/
@@ -74,3 +82,10 @@ L2_EX L2_tab *l2_clone(const L2_game *game,L2_game *target,L2_sint (*rand)(struc
 L2_EX L2_pv l2_set_pv(L2_game *game,const L2_gb gb);
 	/*L2_pv l2_set_pv(L2_game *game,const L2_gb gb)	设置特定坐标上格子的数值；
 			返回原数值*/
+static L2_pvf _L2_TWO[19]={0x1,0x2,0x4,0x8,0x10,0x20,0x40,0x80,0x100,0x200,0x400,0x800,0x1000,0x2000,0x4000,0x8000,0x10000,0x20000,0x40000};	/*_TWO[n]=2^n*/
+inline L2_sv l2_plus_sv(const L2_sv sv,const L2_pv pv)
+	return sv+_L2_TWO[pv];
+inline L2_pvf l2_pv2pvf(L2_pv pv)
+	return _L2_TWO[pv];
+inline L2_tab *l2_get_tablelink(const L2_game *game)
+	return &(game->table);
