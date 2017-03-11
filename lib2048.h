@@ -5,8 +5,7 @@
 #	define L2_EX
 #else
 #	ifdef L2_INLINE
-#		define L2_EX inline
-#		include<lib2048.c>
+#		define L2_EX static inline
 #	else
 #		define L2_EX extern
 #	endif
@@ -93,3 +92,6 @@ static inline L2_pvf l2_pv2pvf(L2_pv pv){
 static inline L2_tab *l2_get_tablelink(const L2_game *game){
 	return &(game->table);
 }
+#ifdef L2_INLINE
+#include<lib2048.c>
+#endif
