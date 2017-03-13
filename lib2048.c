@@ -97,7 +97,7 @@ L2_EX L2_gb l2_new_pv(L2_game *game,const L2_gb gb){
 		for(L2_xy y=(gb.point.y==4?0:gb.point.y);y<=(gb.point.y==4?3:gb.point.y);y++)
 			if((game->table)[x][y]==0) tmp[count++]=(L2_point){.x=x,.y=y};
 	L2_gb gb_tmp=(L2_gb){
-		.point=tmp[(gb.point.x==4&&gb.point.y==4)?0:(*(game->rand))(game->randi,0,count-1)],
+		.point=tmp[(gb.point.x==4&&gb.point.y==4)?(*(game->rand))(game->randi,0,count-1)]:0,
 		.val=(gb.val?gb.val:(*(game->rand))(game->randi,1,2))
 	};
 	l2_set_gb(game,gb_tmp);

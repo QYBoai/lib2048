@@ -1,3 +1,5 @@
+#ifndef L2_HEAD
+
 #include <stdint.h>
 #define L2_VER 1
 #define L2_HEAD
@@ -12,10 +14,31 @@
 #endif
 typedef uint_least8_t L2_pv;
 	/*L2_pv	格子中的数字(指数，如：格子中的数字为16，该值为4)*/
+#define L2_PV_PRIo PRIoLEAST8
+#define L2_PV_PRIu PRIuLEAST8
+#define L2_PV_PRIx PRIxLEAST8
+#define L2_PV_PRIX PRIXLEAST8
+#define L2_PV_SCNd SCNdLEAST8
+#define L2_PV_SCNi SCNiLEAST8
+
 typedef uint_least32_t L2_sv;
 	/*L2_sv	分数*/
+#define L2_SV_PRIo PRIoLEAST32
+#define L2_SV_PRIu PRIuLEAST32
+#define L2_SV_PRIx PRIxLEAST32
+#define L2_SV_PRIX PRIXLEAST32
+#define L2_SV_SCNd SCNdLEAST32
+#define L2_SV_SCNi SCNiLEAST32
+
 typedef uint_least8_t L2_xy;
 	/*L2_xy	坐标的数值*/
+#define L2_XY_PRIo PRIoLEAST8
+#define L2_XY_PRIu PRIuLEAST8
+#define L2_XY_PRIx PRIxLEAST8
+#define L2_XY_PRIX PRIXLEAST8
+#define L2_XY_SCNd SCNdLEAST8
+#define L2_XY_SCNi SCNiLEAST8
+
 struct L2_point{
 	L2_xy x;	/*横坐标*/
 	L2_xy y;	/*纵坐标*/
@@ -34,8 +57,22 @@ typedef L2_sv L2_tab[4][4];
 	/*L2_tab	一个棋盘*/
 typedef uint_least8_t L2_sint;
 	/*L2_sint	常用短整数*/
+#define L2_SINT_PRIo PRIoLEAST8
+#define L2_SINT_PRIu PRIuLEAST8
+#define L2_SINT_PRIx PRIxLEAST8
+#define L2_SINT_PRIX PRIXLEAST8
+#define L2_SINT_SCNd SCNdLEAST8
+#define L2_SINT_SCNi SCNiLEAST8
+
 typedef uint_least32_t L2_pvf;
 	/*L2_pvf	格子实际数值*/
+#define L2_PVF_PRIo PRIoLEAST32
+#define L2_PVF_PRIu PRIuLEAST32
+#define L2_PVF_PRIx PRIxLEAST32
+#define L2_PVF_PRIX PRIXLEAST32
+#define L2_PVF_SCNd SCNdLEAST32
+#define L2_PVF_SCNi SCNiLEAST32
+
 struct L2_game{
 	L2_sv soc;	/*分数*/
 	L2_tab table;	/*棋盘*/
@@ -94,4 +131,6 @@ static inline L2_tab *l2_get_tablelink(const L2_game *game){
 }
 #ifdef L2_INLINE
 #include<lib2048.c>
+#endif
+
 #endif
