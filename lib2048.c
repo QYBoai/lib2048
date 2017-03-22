@@ -83,7 +83,7 @@ L2_EX L2_sint l2_num(L2_game *game){
 	}
 #undef t
 }
-        /*L2_sint l2_num(const L2_game *game)    返回占用格子数；
+        /*L2_sint l2_num(L2_game *game)    返回占用格子数；
                         游戏已结束返回17*/
 L2_EX L2_gb l2_new(L2_game *game){
 	return l2_new_pv(game,(L2_gb){.point=(L2_point){.x=4,.y=4},.val=0});
@@ -97,7 +97,7 @@ L2_EX L2_gb l2_new_pv(L2_game *game,const L2_gb gb){
 		for(L2_xy y=(gb.point.y==4?0:gb.point.y);y<=(gb.point.y==4?3:gb.point.y);y++)
 			if((game->table)[x][y]==0) tmp[count++]=(L2_point){.x=x,.y=y};
 	L2_gb gb_tmp=(L2_gb){
-		.point=tmp[(gb.point.x==4&&gb.point.y==4)?(*(game->rand))(game->randi,0,count-1)]:0,
+		.point=tmp[(gb.point.x==4||gb.point.y==4)?(*(game->rand))(game->randi,0,count-1):0],
 		.val=(gb.val?gb.val:(*(game->rand))(game->randi,1,2))
 	};
 	l2_set_gb(game,gb_tmp);
