@@ -83,7 +83,7 @@ L2_EX L2_sint l2_num(L2_game *game){
 	}
 #undef t
 }
-        /*L2_sint l2_num(const L2_game *game)    返回占用格子数；
+        /*L2_sint l2_num(L2_game *game)    返回占用格子数；
                         游戏已结束返回17*/
 L2_EX L2_gb l2_new(L2_game *game){
 	return l2_new_pv(game,(L2_gb){.point=(L2_point){.x=4,.y=4},.val=0});
