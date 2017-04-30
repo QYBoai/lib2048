@@ -1,5 +1,5 @@
 #ifndef L2_HEAD
-
+#include <inttypes.h>
 #include <stdint.h>
 #define L2_VER 1
 #define L2_HEAD
@@ -120,13 +120,16 @@ L2_EX L2_pv l2_set_pv(L2_game *game,const L2_gb gb);
 	 *
 			返回原数值*/
 static L2_pvf _L2_TWO[19]={0x1,0x2,0x4,0x8,0x10,0x20,0x40,0x80,0x100,0x200,0x400,0x800,0x1000,0x2000,0x4000,0x8000,0x10000,0x20000,0x40000};	/*_TWO[n]=2^n*/
+static inline L2_sv l2_get_soc(const L2_game *game){
+	return game->soc;
+}
 static inline L2_sv l2_plus_sv(const L2_sv sv,const L2_pv pv){
 	return sv+_L2_TWO[pv];
 }
 static inline L2_pvf l2_pv2pvf(L2_pv pv){
 	return _L2_TWO[pv];
 }
-static inline L2_tab *l2_get_tablelink(const L2_game *game){
+static inline const L2_tab *l2_get_tablelink(const L2_game *game){
 	return &(game->table);
 }
 #ifdef L2_INLINE

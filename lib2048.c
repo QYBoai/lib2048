@@ -9,7 +9,7 @@ L2_EX L2_game *l2_init(L2_game *game,L2_sint (*rand)(void *randi,L2_sint s,L2_si
 	game->rand=rand;
 	game->rands=rands;
 	game->randi=randi;
-	if(game->randi!=(void*)0)(*(game->rands))(game->randi);
+	if(game->rands!=(void*)0)(*(game->rands))(game->randi);
 	return game;
 }
         /*L2_game *l2_init(L2_game *game,L2_sint (*rand)(void *randi,L2_sint s,L2_sint e),void (*rands)(void *randi),void *randi)	初始化一个游戏实例(但不生成初始数格)；
@@ -26,21 +26,24 @@ L2_EX L2_game *l2_start(L2_game *game){
 	L2_xy nb=0; \
 	L2_sint tmp=0; \
 	for(L2_xy nl=0;nl<=3;nl++){ \
-		if(tmp){ \
-			if(s(nl)==s(nb)){ \
+		if(s(nl)!=0){\
+			if(tmp){ \
+				if(s(nl)==s(nb)){ \
+					ok=1; \
+					tmp=0; \
+					num--; \
+					s(nl)=0;\
+					soc+=l2_plus_sv(0,++s(nb++)); \
+					continue; \
+				} else ++nb; \
+			} \
+			if(nl!=nb){ \
+				s(nb)=s(nl); \
 				ok=1; \
-				tmp=0; \
-				num--; \
-				soc+=l2_plus_sv(0,++s(nb++)); \
-				continue; \
-			} else ++nb; \
+			} \
+			tmp=1; \
 		} \
-		if(nl!=nb){ \
-			s(nl)=s(nb); \
-			ok=1; \
-		} \
-		tmp=1; \
-	} \
+	}\
 	for(nb+=tmp;nb<=3;nb++) s(nb)=0; \
 }
 #define _l2_move_f() { \
@@ -79,8 +82,8 @@ L2_EX L2_sint l2_num(L2_game *game){
 			)return 16;
 		}
 		game->num=17;
-		return 17;
 	}
+	return game->num;
 #undef t
 }
         /*L2_sint l2_num(L2_game *game)    返回占用格子数；
@@ -101,6 +104,7 @@ L2_EX L2_gb l2_new_pv(L2_game *game,const L2_gb gb){
 		.val=(gb.val?gb.val:(*(game->rand))(game->randi,1,2))
 	};
 	l2_set_gb(game,gb_tmp);
+	game->num++;
 	return gb_tmp;
 }
         /*L2_gd l2_new_pv(L2_game *game,const L2_gb gb)	生成新数字，gb参数为自定生成数字的位置以及数值，gb中坐标值取4则坐标随机，数值取0则数值随机。
