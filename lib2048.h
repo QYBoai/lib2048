@@ -1,5 +1,5 @@
 #ifndef L2_HEAD
-
+#include <inttypes.h>
 #include <stdint.h>
 #define L2_VER 1
 #define L2_HEAD
@@ -129,7 +129,7 @@ static inline L2_sv l2_plus_sv(const L2_sv sv,const L2_pv pv){
 static inline L2_pvf l2_pv2pvf(L2_pv pv){
 	return _L2_TWO[pv];
 }
-static inline L2_tab *l2_get_tablelink(const L2_game *game){
+static inline const L2_tab *l2_get_tablelink(const L2_game *game){
 	return &(game->table);
 }
 #ifdef L2_INLINE
