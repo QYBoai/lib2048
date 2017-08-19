@@ -5,12 +5,12 @@
 #include <time.h>
 #define head1 static
 /*head1 char *centerPvf(const L2_pvf pvf,char *str);*/
-head1 void priPvf(const L2_pvf pvf);
+head1 void priPv(const L2_pv pv);
 head1 void priTab(L2_tab *tab);
 head1 void priInfo(L2_game *game);
 head1 void priAll(L2_game *game);
 head1 void priHelp(){
-	printf("***help\n");
+	printf("w,s,a,d to move Up,Down,Left,Right.\nq to Quit.");
 }
 static L2_sint randa(void *randi,L2_sint s,L2_sint e);
 static void rands(void *);
@@ -35,16 +35,18 @@ head1 void priInfo(L2_game *game){
 	printf("\n");
 }
 head1 void priTab(L2_tab *tab){
+#define max(a,b) ((a)>(b)?(a):(b))
+//	int ml[4]={};
 	for(L2_sint y=0;y<=3;y++){
 		for(L2_sint x=0;x<=3;x++)
-			priPvf(l2_pv2pvf((*tab)[x][y]));
+			priPv((*tab)[x][y]);
 	printf("\n");
 	}
 }
-head1 void priPvf(const L2_pvf pvf){
-	if(pvf!=1) printf("%" L2_PVF_PRIu,pvf);
+head1 void priPv(const L2_pv pv){
+	if(pv!=0) printf("\033[1;31m%" L2_PVF_PRIu "\033[0m",l2_pv2pvf(pv));
 	else printf("0");
-	printf(" ");
+	printf("	");
 }
 int main(){
 	printf("Welcome to Demo of Lib2048!\nInput \'h\' to get help.\n");
@@ -66,12 +68,12 @@ int main(){
 				if(l2_num(&game)==17) printf("Ended!\n"); \
 				else if(! m (&game)) printf("Move fail!"); \
 				else {l2_new(&game); priAll(&game);} }
-			case 'u': move(l2_fy); break;
-			case 'd': move(l2_my); break;
-			case 'l': move(l2_fx); break;
-			case 'r': move(l2_mx); break;
+			case 'w': move(l2_fy); break;
+			case 's': move(l2_my); break;
+			case 'a': move(l2_fx); break;
+			case 'd': move(l2_mx); break;
 			case 'R': goto start;
-			case 'a': priAll(&game); break;
+			case 'i': priAll(&game); break;
 			case 'q': printf("GoodBye!\n"); return 0;
 			case 'h': priHelp(); break;
 			default: printf("Error! Unknown Command. \n");priHelp();
